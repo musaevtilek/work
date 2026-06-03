@@ -7,11 +7,47 @@ function TaskForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
-    // Здесь будет логика сохранения задачи
-    console.log({ title, description, dueDate, priority });
-    navigate('/tasks');
+  const handleSubmit = async () => {
+    if (!title.trim()) {
+      alert('Введите заголовок задачи');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description || '',
+          priority: priority,
+          dueDate: dueDate || null
+        })
+      });
+      
+      const data = await response.json();
+      console.log('Ответ сервера:', data);
+      
+      if (response.ok && (data.task || data.id)) {
+        alert('✅ Задача создана!');
+        navigate('/tasks');
+        window.location.reload();
+      } else {
+        alert('Ошибка: ' + (data.message || 'Неизвестная ошибка'));
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      alert('Ошибка соединения');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,7 +79,7 @@ function TaskForm() {
         <label className="label-text">Срок выполнения</label>
         <input 
           className="input-field" 
-          placeholder="20 мая 2026, 18:00"
+          placeholder="2026-06-10"
           style={{ marginBottom: 11 }}
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
@@ -52,14 +88,17 @@ function TaskForm() {
         <label className="label-text">Приоритет</label>
         <div className="priority-pick" style={{ marginBottom: 16 }}>
           <button 
+            type="button"
             className={priority === 'low' ? 'active' : ''} 
             onClick={() => setPriority('low')}
           >Низкий</button>
           <button 
+            type="button"
             className={priority === 'medium' ? 'active medium' : ''} 
             onClick={() => setPriority('medium')}
           >Средний</button>
           <button 
+            type="button"
             className={priority === 'high' ? 'active high' : ''} 
             onClick={() => setPriority('high')}
           >Высокий</button>
@@ -67,14 +106,17 @@ function TaskForm() {
 
         <div style={{ display: 'flex', gap: 8 }}>
           <button 
+            type="button"
             style={{ flex: 1, padding: 10, background: '#f1f5f9', color: '#475569', border: 'none', borderRadius: 11, fontWeight: 500, fontSize: 13, cursor: 'pointer' }}
             onClick={() => navigate('/tasks')}
           >Отмена</button>
           <button 
+            type="button"
             className="btn-grad" 
             style={{ flex: 2 }}
             onClick={handleSubmit}
-          >Создать</button>
+            disabled={loading}
+          >{loading ? 'Создание...' : 'Создать'}</button>
         </div>
       </div>
     </div>

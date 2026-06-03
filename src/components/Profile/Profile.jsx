@@ -20,9 +20,9 @@ function Profile() {
       </div>
 
       <div style={{ textAlign: 'center', padding: '14px 0 18px' }}>
-        <div className="avatar-big">А</div>
-        <h3 style={{ fontSize: 15, fontWeight: 600, margin: '0 0 3px' }}>Айда Касымова</h3>
-        <p style={{ fontSize: '11.5px', color: '#64748b', margin: 0 }}>aida@example.com</p>
+        <div className="avatar-big">Т</div>
+        <h3 style={{ fontSize: 15, fontWeight: 600, margin: '0 0 3px' }}>Тилек Мусаев</h3>
+        <p style={{ fontSize: '11.5px', color: '#64748b', margin: 0 }}>Tilek@example.com</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 18 }}>

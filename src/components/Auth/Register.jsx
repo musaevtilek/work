@@ -30,7 +30,10 @@ function Register() {
       <h2 style={{ textAlign: 'center', fontSize: '18px', fontWeight: 600, marginBottom: 5 }}>
         Создать аккаунт
       </h2>
-      
+      <p style={{ textAlign: 'center', fontSize: '11.5px', color: '#64748b', marginBottom: 22 }}>
+        Начните планировать сегодня
+      </p>
+
       <form onSubmit={handleSubmit}>
         <label className="label-text">Email</label>
         <input 
