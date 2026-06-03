@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://to-do-list-agee.onrender.com/api/:path*"
+      "destination": "/api/proxy"
     }
   ]
 }

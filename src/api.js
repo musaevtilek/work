@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api';  
+const API_BASE_URL = '';  // Пустая строка — запросы будут на тот же домен
 
 const api = axios.create({
   baseURL: API_BASE_URL,
